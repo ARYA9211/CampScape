@@ -1,0 +1,47 @@
+<% layout('layouts/boilerplate') %>
+    <div id="cluster-map"></div>
+    <h1>All Campgrounds</h1>
+    <div>
+        <a href="/campgrounds/new">Add Campgrounds</a>
+    </div>
+    <ul>
+        <% for (let campground of campgrounds) { %>
+            <div class="card mb-3">
+                <div class="row">
+                    <div class="col m-auto">
+                        <% if(campground.images.length) {%>
+                            <img crossorigin="anonymous" class="img-fluid" src="<%= campground.images[0].url %>">
+                            <% } else {%>
+                                <img crossorigin="anonymous" class="img-fluid"
+                                    src="https://res-console.cloudinary.com/dxv5cvuod/thumbnails/v1/image/upload/v1750798967/Q2FtcFNhY3BlL210bmN2c2VtcDZ3emtncjF0cWcz/drilldown">
+
+                                <% } %>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= campground.title%>
+                            </h5>
+
+                            <p class="card-text">
+                                <%= campground.description%>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <%= campground.location%>
+                                </small>
+                            </p>
+                            <a class="btn btn-primary" href="/campgrounds/<%=campground._id%>">View <%=
+                                    campground.title%></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+    </ul>
+    <script>
+        const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
+        const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+    </script>
+    <script src="/javascripts/clusterMap.js"></script>
